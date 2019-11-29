@@ -1,36 +1,33 @@
 package database;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 public class Query 
 {
-	//returns all members
-	public static void printAllMembers( Database database )
+	/* used to retrieve tables -- doesn't work if parameters are needed */
+	public static ResultSet simpleQuery( Database database, String query )
 	{
 		PreparedStatement statement;
+		ResultSet results = null;
 		
 		try {
 			Connection connection = database.getConnection();
-			statement = connection.prepareStatement( "select * from mm_member" ); 
-			ResultSet results = statement.executeQuery();
-			
-			while ( results.next() ) {
-				String first = results.getString("first");
-				String last = results.getString("last");
-				int id = results.getInt("member_id");
-				System.out.println( id + " " + first + " " + last);
-			}
-			
-			results.close();
+			statement = connection.prepareStatement( query ); 
+			results = statement.executeQuery();
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println( "\nSomething went wrong with sqlQuery()" );
 		}
+		
+		return results;
 	}
-	
-	
 }
+
+
+
+
+
+
+

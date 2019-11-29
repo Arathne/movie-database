@@ -40,4 +40,20 @@ public class InputHandler
 		//scan = new Scanner( System.in );
 		return output;
 	}
+	
+	public float getFloat( String msg )
+	{
+		System.out.print( outputFormat( msg ) );
+		float output = -1;
+		
+		try
+		{
+			output = scan.nextFloat();
+		} catch ( InputMismatchException e ) {
+			output = -1;
+		}
+		
+		//scan = new Scanner( System.in );
+		return output;
+	}
 }

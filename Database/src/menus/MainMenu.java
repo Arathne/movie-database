@@ -8,13 +8,14 @@ public class MainMenu extends LogInMenu{
 		MemberMenu memberMenu = new MemberMenu();
 		
 		adminMenu.setDatabase( database );
+		memberMenu.setDatabase( database );
 		
 		boolean run = true;
 		while ( run )
 		{
 			System.out.println( "\nMain Menu:" + "\n" +
-					"1) Admin" + "\n" +
-					"2) Member" + "\n" +
+					"1) Sign In as Admin" + "\n" +
+					"2) Sign In as Member" + "\n" +
 					"3) Exit" + "\n" );
 			
 			String answer = input.getString( "**Choose an option**" );
