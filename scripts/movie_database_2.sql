@@ -11,28 +11,33 @@ create or replace FUNCTION category_name(
     )
     RETURN VARCHAR2
 IS
-    lv_category VARCHAR2(13) := 'uncategorized';
+    lv_category VARCHAR2(13);
 BEGIN
     SELECT movie_category
     INTO lv_category
     FROM mm_movie_type
     WHERE movie_cat_id = p_category_id;
     RETURN lv_category;
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'no category';
 END;
 
 /* auto increment mm_movie */
-create SEQUENCE mm_movie_seq;
-
+/* mm_movie_seq */
 create or replace TRIGGER movie_increment
-    BEFORE INSERT ON MM_MOVIE
+    BEFORE INSERT ON mm_movie
     FOR EACH ROW
 BEGIN
-
+    SELECT mm_movie_seq.NEXTVAL
+    INTO :NEW.movie_id
+    FROM dual;
 END;
 
+INSERT INTO MM_MOVIE( movie_title, movie_cat_id, movie_value, movie_qty ) VALUES( 'E.T Phone Home', 10, 86, 3 );
 
-
-
+COMMIT;
 
 
 

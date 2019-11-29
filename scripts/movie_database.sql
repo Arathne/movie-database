@@ -1,3 +1,13 @@
+DROP TABLE mm_movie_type CASCADE constraints;
+DROP TABLE mm_movie CASCADE constraints;
+DROP TABLE mm_rental CASCADE constraints;
+DROP TABLE mm_pay_type CASCADE constraints;
+DROP TABLE mm_member CASCADE constraints;
+DROP SEQUENCE mm_rental_seq;
+DROP SEQUENCE mm_movie_seq;
+
+create SEQUENCE mm_movie_seq START WITH 13;
+
 CREATE TABLE mm_movie_type
      (movie_cat_id   NUMBER(2),
       movie_category VARCHAR(12),
