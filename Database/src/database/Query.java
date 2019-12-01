@@ -6,7 +6,9 @@ import java.sql.SQLException;
 
 public class Query 
 {
-	/* used to retrieve tables -- doesn't work if parameters are needed */
+	/* used to retrieve tables -- doesn't work if parameters are needed 
+	 * returns a table if needed
+	 */
 	public static ResultSet simpleQuery( Database database, String query )
 	{
 		PreparedStatement statement;
@@ -18,7 +20,7 @@ public class Query
 			results = statement.executeQuery();
 		}
 		catch (SQLException e) {
-			System.out.println( "\nSomething went wrong with sqlQuery()" );
+			System.out.println( "\n" + e.getMessage() );
 		}
 		
 		return results;

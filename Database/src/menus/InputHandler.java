@@ -37,7 +37,7 @@ public class InputHandler
 			output = -1;
 		}
 		
-		//scan = new Scanner( System.in );
+		scan = new Scanner( System.in );
 		return output;
 	}
 	
@@ -53,7 +53,7 @@ public class InputHandler
 			output = -1;
 		}
 		
-		//scan = new Scanner( System.in );
+		scan = new Scanner( System.in );
 		return output;
 	}
 }

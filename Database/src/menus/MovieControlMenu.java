@@ -7,6 +7,9 @@ public class MovieControlMenu extends AdminMenu
 	
 	public void run()
 	{	
+		MovieUpdateMenu updateMenu = new MovieUpdateMenu();
+		updateMenu.setDatabase( database );
+		
 		boolean run = true;
 		while ( run )
 		{
@@ -20,13 +23,13 @@ public class MovieControlMenu extends AdminMenu
 			String answer = input.getString( "**Choose an option**" );
 			
 			if ( answer.equals("1") ){
-				MovieQuery.listMovies( database );
+				MovieQuery.listAllMovies( database );
 			}
 			else if ( answer.equals("2") ) {
 				addMovieOption();
 			}
 			else if ( answer.equals("3") ) {
-				updateMovieOption();
+				updateMenu.run();
 			}
 			else if ( answer.equals("4") ) {
 				removeMovieOption();
@@ -40,9 +43,9 @@ public class MovieControlMenu extends AdminMenu
 	private void addMovieOption()
 	{
 		String title = input.getString( "\nTitle of movie?" );
-		MovieQuery.listCategories( database );
+		MovieQuery.listAllCategories( database );
 		int category = input.getInteger( "\nCategory? (pick number)" );
-		float value = input.getFloat("\nValue? (5-100)");
+		float value = input.getFloat("\nValue? (5-99)");
 		int quantity = input.getInteger( "\nQuantity?" );
 		MovieQuery.insertMovie( database, title, category, value, quantity );
 	}
@@ -51,10 +54,5 @@ public class MovieControlMenu extends AdminMenu
 	{
 		int id = input.getInteger( "\nEnter ID number of the movie you wish to delete" );
 		MovieQuery.removeMovie(database, id);
-	}
-	
-	private void updateMovieOption()
-	{
-		
 	}
 }

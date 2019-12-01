@@ -5,7 +5,10 @@ public class AdminMenu extends MainMenu{
 	{
 		InputHandler input = new InputHandler();
 		MovieControlMenu movieMenu = new MovieControlMenu();
+		MemberControlMenu memberMenu = new MemberControlMenu();
+		
 		movieMenu.setDatabase( database );
+		memberMenu.setDatabase( database );
 		
 		boolean run = true;
 		while ( run )
@@ -21,7 +24,7 @@ public class AdminMenu extends MainMenu{
 				movieMenu.run();
 			}
 			else if ( answer.equals("2") ) {
-				
+				memberMenu.run();
 			}
 			else if ( answer.equals("3") ) {
 				run = false;

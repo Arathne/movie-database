@@ -1,11 +1,13 @@
 package menus;
 
+import database.MemberQuery;
+
 public class MainMenu extends LogInMenu{
 	public void run() 
 	{
 		InputHandler input = new InputHandler();
 		AdminMenu adminMenu = new AdminMenu();
-		MemberMenu memberMenu = new MemberMenu();
+		CurrentMemberMenu memberMenu = new CurrentMemberMenu();
 		
 		adminMenu.setDatabase( database );
 		memberMenu.setDatabase( database );
@@ -23,6 +25,9 @@ public class MainMenu extends LogInMenu{
 				adminMenu.run();
 			}
 			else if ( answer.equals("2") ) {
+				MemberQuery.listAllMembers( database );
+				int memberId = input.getInteger( "\nInput an ID of an existing member" );
+				memberMenu.setMemberId( memberId );
 				memberMenu.run();
 			}
 			else if ( answer.equals("3") ) {
@@ -30,5 +35,5 @@ public class MainMenu extends LogInMenu{
 				run = false;
 			}
 		}
-	};
+	}
 }

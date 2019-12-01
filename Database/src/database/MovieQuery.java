@@ -1,17 +1,13 @@
 package database;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import types.Movie;
 
-public class MovieQuery extends Query {
-	
+public class MovieQuery extends Query 
+{	
 	/* list all movies */
-	public static void listMovies( Database database )
+	public static void listAllMovies( Database database )
 	{
 		ResultSet table = simpleQuery( database, "SELECT movie_id, movie_title, category_name(movie_cat_id) AS \"movie_cat_id\", movie_value, movie_qty FROM MM_MOVIE" ); //get table info
 		
@@ -19,7 +15,7 @@ public class MovieQuery extends Query {
 		{
 			try {
 			 	System.out.println();
-				while ( table.next() ) //print movie info
+				while ( table.next() )
 				{
 					int id = table.getInt( "movie_id" );
 					String title = table.getString( "movie_title" );
@@ -36,7 +32,7 @@ public class MovieQuery extends Query {
 	}
 	
 	/* list all categories */
-	public static void listCategories( Database database )
+	public static void listAllCategories( Database database )
 	{
 		ResultSet table = simpleQuery( database, "SELECT * FROM MM_MOVIE_TYPE" );
 		
@@ -44,7 +40,7 @@ public class MovieQuery extends Query {
 		{
 			try {
 			 	System.out.println();
-				while ( table.next() ) //print movie info
+				while ( table.next() )
 				{
 					int id = table.getInt( "movie_cat_id" );
 					String category = table.getString( "movie_category" );
@@ -52,7 +48,7 @@ public class MovieQuery extends Query {
 					System.out.println( "\t" + output );
 				}
 			} catch (SQLException e) {
-				System.out.println("no movies found");
+				System.out.println("no movie categories found");
 			}
 		}
 	}
@@ -60,38 +56,42 @@ public class MovieQuery extends Query {
 	/* inserts a movie from given specifications */
 	public static void insertMovie( Database database, String title, int category_id, float value, int quantity )
 	{
-		PreparedStatement statement;
-		
-		try
-		{
-			String query = "INSERT INTO MM_MOVIE( movie_title, movie_cat_id, movie_value, movie_qty ) VALUES( ?, ?, ?, ? )";
-			Connection connection = database.getConnection();
-			statement = connection.prepareStatement( query ); 
-			statement.setString( 1, title );
-			statement.setInt( 2, category_id );
-			statement.setFloat( 3, value );
-			statement.setInt( 4, quantity );
-			
-			statement.executeUpdate();
-		} catch ( SQLException e ) {
-			System.out.println( "\nFailed to insert data into table" + "\n" + e.getMessage() );
-		}
+		String query = String.format( "INSERT INTO MM_MOVIE( movie_title, movie_cat_id, movie_value, movie_qty ) VALUES( '%s', %s, %s, %s )", title, category_id, value, quantity );
+		simpleQuery( database, query );
 	}
 	
-	/* removes movie from given ID */
+	/* removes movie with given ID */
 	public static void removeMovie( Database database, int movieId )
 	{
-		PreparedStatement statement;
-		
-		try
-		{
-			String query = "DELETE FROM mm_movie WHERE movie_id = ?";
-			Connection connection = database.getConnection();
-			statement = connection.prepareStatement( query ); 
-			statement.setInt( 1, movieId );
-			statement.execute();
-		} catch ( SQLException e ) {
-			System.out.println( "\nFailed to delete data" + "\n" + e.getMessage() );
-		}
+		String query = "DELETE FROM mm_movie WHERE movie_id = " + movieId;
+		simpleQuery( database, query );
+	}
+	
+	/* update movie -- title */
+	public static void updateMovieTitle( Database database, int movieId, String newTitle )
+	{
+		String query = String.format( "UPDATE MM_MOVIE SET movie_title = '%s' WHERE movie_id = %s", newTitle, movieId );
+		simpleQuery( database, query );
+	}
+	
+	/* update movie -- category */
+	public static void updateMovieCategory( Database database, int movieId, int newCategory )
+	{
+		String query = String.format( "UPDATE MM_MOVIE SET movie_cat_id = %s WHERE movie_id = %s", newCategory, movieId );
+		simpleQuery( database, query );
+	}
+	
+	/* update movie -- value */
+	public static void updateMovieValue( Database database, int movieId, double newValue )
+	{
+		String query = String.format( "UPDATE MM_MOVIE SET movie_value = %s WHERE movie_id = %s", newValue, movieId );
+		simpleQuery( database, query );
+	}
+	
+	/* update movie -- quantity */
+	public static void updateMovieQuantity( Database database, int movieId, int newQuantity )
+	{
+		String query = String.format( "UPDATE MM_MOVIE SET movie_qty = %s WHERE movie_id = %s", newQuantity, movieId );
+		simpleQuery( database, query );
 	}
 }
