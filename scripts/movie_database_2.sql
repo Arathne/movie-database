@@ -3,7 +3,6 @@ SELECT * FROM MM_RENTAL;
 SELECT * FROM MM_MEMBER;
 SELECT * FROM MM_MOVIE_TYPE;
 SELECT * FROM MM_PAY_TYPE;
-COMMIT;
 
 /* returns category name from the category id */
 create or replace FUNCTION category_name(
@@ -141,22 +140,3 @@ BEGIN
     DELETE FROM mm_member
     WHERE member_id = p_member_id;
 END;
-
-
-COMMIT;
-SELECT * FROM mm_pay_type;
-SELECT * FROM mm_movie;
-DESC mm_movie;
-SELECT * FROM mm_rental;
-SELECT * FROM mm_member;
-
-UPDATE mm_movie SET movie_qty = 1 WHERE movie_id = 1;
-
-INSERT INTO mm_rental ( member_id, movie_id, payment_methods_id ) VALUES ( 10, 1, 5 );
-
-DELETE FROM mm_rental WHERE member_id = 12 and rental_id = 15;
-
-SELECT rental_id, movie_name( movie_id ) AS movie_id, checkout_date, checkin_date FROM mm_rental WHERE member_id = 12;
-
-
-
